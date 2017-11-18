@@ -51,10 +51,8 @@ describe('Request @headers @proxy downstream @auth @key-auth', () => {
                 action: {
                   headerPrefix: 'eg-',
                   headersMap: {
-                    'id': 'consumer.id',
                     'consumer-name': 'consumer.name',
                     'consumer-type': 'consumer.type',
-                    'traceid': 'traceId',
                     'scopes': 'consumer.token.scopes'
                   }
                 }
@@ -192,10 +190,10 @@ describe('Request @headers @proxy downstream @auth @key-auth', () => {
       .then(() => {
         assert(spy.calledOnce);
         const headers = spy.getCall(0).args[0];
-        assert.equal(headers['eg-id'], application.id);
+        assert.equal(headers['eg-consumer-id'], application.id);
         assert.equal(headers['eg-consumer-name'], application.name);
         assert.equal(headers['eg-consumer-type'], 'application');
-        assert.ok(headers['eg-traceid']);
+        assert.ok(headers['eg-request-id']);
         assert.equal(headers['eg-scopes'], 'authorizedScope');
 
         assert(Object.keys(spy.getCall(0).args[0]).indexOf('authorization') === -1);
